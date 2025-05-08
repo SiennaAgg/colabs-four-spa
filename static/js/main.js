@@ -727,3 +727,12 @@ if (glitchAudio) {
   
 }
 
+function stopVideoAndReturnCorrupted() {
+  const video = document.querySelector('.video-container video');
+  if (video) {
+    video.pause();
+    video.currentTime = 0;
+  }
+  openScreen('corrupted-select-files-screen');
+}
+

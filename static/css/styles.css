@@ -1059,3 +1059,68 @@ body {
 .flicker {
   background-color: black !important;
 }
+
+/* Red Terminal Theme */
+.red-flicker {
+  color: #ff3b3b;
+  animation: flickerRed 1.5s infinite alternate;
+}
+
+.red-return {
+  background-color: #660000;
+  border: 1px solid #aa0000;
+  color: #ff3b3b;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.red-return:hover {
+  background-color: #990000;
+  border-color: #ff4d4d;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+
+.red-dot::after {
+  content: '...';
+  animation: blinkRed 1s infinite step-end;
+  color: #ff3b3b;
+}
+
+.red-glitch {
+  color: #ff3b3b;
+  text-shadow: 0 0 2px red, 0 0 5px #ff0000;
+}
+
+/* Glitch Text Animation */
+.glitch-text {
+  animation: glitchEffect 0.8s infinite alternate;
+}
+
+/* Flicker */
+@keyframes flickerRed {
+  0% { opacity: 1; }
+  10% { opacity: 0.9; }
+  20% { opacity: 0.95; }
+  30% { opacity: 0.85; }
+  40% { opacity: 1; }
+  50% { opacity: 0.9; }
+  60% { opacity: 1; }
+  100% { opacity: 0.95; }
+}
+
+/* Dot Animation */
+@keyframes blinkRed {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Glitch Shake */
+@keyframes glitchEffect {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(1px, -1px); }
+  60% { transform: translate(-1px, -1px); }
+  80% { transform: translate(1px, 1px); }
+  100% { transform: translate(0, 0); }
+}
