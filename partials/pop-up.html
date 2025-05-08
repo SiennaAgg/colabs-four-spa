@@ -1,0 +1,20 @@
+<div id="pop-up-screen" class="screen">
+  <div class="corrupted-msdos-banner">
+    Starting MS-DOS<span id="dots-select">...</span>
+  </div>
+  <div class="popup-box" style="border-color: #FF3333; box-shadow: 0 0 20px #FF3333;">
+    <h1 style="color: #AA2222;">SYSTEM HAS DETECTED CORRUPTED FILES</h1>
+    <p class="popup-warning">
+      Warning: Proceeding will prevent access to corrupted files. This action cannot be undone.
+    </p>
+    <br>
+    <div class="button-column">
+      <button class="choice-red" onclick="loadFileView('loading-glitch.html', 'loading-glitch-screen')">
+        Proceed with Restoration
+      </button>
+      <button class="choice-red" onclick="openScreen('corrupted-select-files-screen')">
+        Return to Files
+      </button>
+    </div>
+  </div>
+</div>

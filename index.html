@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haunted Terminal Archive</title>
+  <link rel="stylesheet" href="static/css/styles.css">
+  <style>
+    .top-spacer {
+      height: 10vh;
+      flex-shrink: 0;
+    }
+
+    .wrapper {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 0;
+    }
+
+    .file-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .file-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 180px;
+      height: 220px;
+      padding: 10px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none; /* ⬅ Turn off all underlines normally */
+      color: #33FF33;
+      background: transparent;
+      border: none;
+      transition: transform 0.2s ease;
+    }
+
+    .file-box:hover {
+      transform: scale(1.1);
+      color: #00FF00;
+      text-decoration: underline; /* ⬅ ONLY underline on hover */
+    }
+
+    .file-icon-new {
+      width: 120px;
+      height: 120px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      background-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .video-icon-new {
+      background-image: url('static/media/file-icon-green-mp4.png');
+    }
+
+    .image-icon-new {
+      background-image: url('static/media/file-icon-green-png.png');
+    }
+
+    .text-icon-new {
+      background-image: url('static/media/file-icon-green-txt.png');
+    }
+
+    .folder-icon-new {
+      background-image: url('static/media/folder-icon-green.png');
+    }
+
+    .file-name-new {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 18px;
+      color: #33FF33;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      text-decoration: none;
+    }
+
+    .file-box:hover .file-name-new {
+      color: #00FF00;
+      text-decoration: underline;
+    }
+
+.file-icon-red-image {
+  background-image: url('static/media/file-icon-red-png.png');
+}
+
+.file-icon-red-video {
+  background-image: url('static/media/file-icon-red-mp4.png');
+}
+
+.file-icon-red-text {
+  background-image: url('static/media/file-icon-red-txt.png');
+}
+
+.folder-icon-red {
+  background-image: url('static/media/folder-icon-red.png');
+}
+
+.file-name-red {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  color: #FF3333;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-decoration: none;
+}
+
+.file-box-red {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 180px;
+  height: 220px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none; /* ⬅ Turn off all underlines normally */
+  color: #FF3333;
+  background: transparent;
+  border: none;
+  transition: transform 0.2s ease;
+    }
+
+    .file-box-red:hover {
+      transform: scale(1.1);
+      color: #FF3333;
+      text-decoration: underline; /* ⬅ ONLY underline on hover */
+    }
+
+
+
+
+
+    #glitch-grid {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.glitch-file {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  animation: fadeOut 1s ease-in forwards;
+  transform: rotate(var(--tilt));
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* Add file-type-specific icons */
+.icon-image {
+  background-image: url('static/media/file-icon-green-png.png');
+}
+
+.icon-video {
+  background-image: url('static/media/file-icon-green-mp4.png');
+}
+
+.icon-text {
+  background-image: url('static/media/file-icon-green-txt.png');
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; transform: scale(1) rotate(var(--tilt)); }
+  100% { opacity: 0; transform: scale(0.7) rotate(var(--tilt)); }
+}
+
+
+@keyframes flashText {
+  0% { opacity: 0; transform: scale(0.95); }
+  25% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Preload Sounds -->
+  <audio id="hover-sound" src="static/media/hover-beep.mp3" preload="auto"></audio>
+  <audio id="click-sound" src="static/media/click-beep.mp3" preload="auto"></audio>
+  <audio id="glitch-audio" src="static/audios/repent-transition.mp3" preload="auto"></audio>
+  <audio id="no-click-sound" src="static/audios/no-button-click.mp3" preload="auto"></audio>
+  <audio id="" src="static/audios/keyboard-typing.wav" preload="auto"></audio>
+  <audio id="" src="static/audios/website-crash.wav" preload="auto"></audio>
+  
+  <!-- START: Power Button Screen -->
+  <div id="power-button-screen" class="screen active">
+    <div class="power-button" onclick="startSystem()">&#x23FB;</div>
+  </div>
+  
+  <!-- Boot Typing Screen -->
+  <div id="boot-typing-screen" class="screen">
+    <div class="container" id="output">
+      <span id="line1"></span><br>
+      <span id="line2"></span><br>
+      <span id="line3"></span><br>
+      <span id="line4"></span><br>
+      <span id="line5"></span><span class="cursor" id="blinker"></span>
+    </div>
+  </div>
+  
+  <!-- Restore Choice Screen -->
+  <div id="restore-choice-screen" class="screen">
+    <div class="msdos-banner">
+      Starting MS-DOS<span id="dots-restore">...</span>
+    </div>
+  
+    <div class="restore-container">
+      <p class="flicker">User: UNKNOWN</p>
+      <p>Would you like to restore the previous session?</p>
+      <div class="choices">
+        <button class="choice glitch-hover" onclick="openScreen('restoring-files-screen')">Restore All Files</button>
+        <button class="choice emphasize" onclick="openScreen('loading-screen')">Manually Select Files</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Restoring Files Screen -->
+  <div id="restoring-files-screen" class="screen">
+    <div class="msdos-banner" id="msdos-banner-restore">
+      Starting MS-DOS<span id="dots-restoring">...</span>
+    </div>
+  
+    <div class="restore-container">
+      <p id="restore-message">Restoring all files<span id="restoring-dots">...</span></p>
+    </div>
+  </div>
+  
+  <!-- Broken Restore Choice Screen -->
+  <div id="broken-restore-choice-screen" class="screen">
+    <div class="msdos-banner">
+      Starting MS-DOS<span id="dots-broken">...</span>
+    </div>
+  
+    <div class="restore-container">
+      <p class="flicker">User: UNKNOWN</p>
+      <p>Would you like to restore the previous session?</p>
+  
+      <div class="choices">
+        <button class="choice emphasize-glitch" onclick="openScreen('loading-screen')">Manually Select Files</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="screen">
+    <div class="msdos-banner">
+      Starting MS-DOS<span id="dots-loading">...</span>
+    </div>
+  
+    <div class="loading-container">
+      <div class="loading-text">LOADING FILE SYSTEM...</div>
+      <div class="glitch-flicker"></div>
+    </div>
+  </div>
+  
+  <!-- Select Files Screen -->
+  <div id="select-files-screen" class="screen">
+    <div class="msdos-banner">
+      Starting MS-DOS<span id="dots-select">...</span>
+    </div>
+  
+    <div class="wrapper">
+      <div class="file-grid">
+  
+        <!-- vlog-1 -->
+        <a class="file-box" onclick="loadFileView('fv1vlog1.html', 'file-view-vlog1-screen')">
+          <div class="file-icon-new video-icon-new"></div>
+          <div class="file-name-new">vlog-1.mp4</div>
+        </a>
+  
+        <!-- outside.png -->
+        <a class="file-box" onclick="loadFileView('fv1outside.html', 'file-view-outside-screen')">
+          <div class="file-icon-new image-icon-new"></div>
+          <div class="file-name-new">outside.png</div>
+        </a>
+  
+        <!-- basement.jpg -->
+        <a class="file-box" onclick="loadFileView('fv1lookingdown.html', 'file-view-basement-screen')">
+          <div class="file-icon-new image-icon-new"></div>
+          <div class="file-name-new">basement.jpg</div>
+        </a>
+  
+        <!-- glitch clip -->
+        <a class="file-box" onclick="loadFileView('fv1glitchclip1.html', 'file-view-glitch-clip1-screen')">
+          <div class="file-icon-new video-icon-new"></div>
+          <div class="file-name-new">ɆⱤⱤØⱤ.mp4</div>
+        </a>
+  
+        <!-- vlog-2 -->
+        <a class="file-box" onclick="loadFileView('diary1.html', 'file-view-diary1-screen')">
+          <div class="file-icon-new video-icon-new"></div>
+          <div class="file-name-new">vlog-2.mp4</div>
+        </a>
+  
+        <!-- vlog-3 -->
+        <a class="file-box" onclick="loadFileView('fv1vlog3.html', 'file-view-vlog3-screen')">
+          <div class="file-icon-new video-icon-new"></div>
+          <div class="file-name-new">vlog-3.mp4</div>
+        </a>
+  
+        <!-- stairs -->
+        <a class="file-box" onclick="loadFileView('fv1stairs.html', 'file-view-stairs-screen')">
+          <div class="file-icon-new image-icon-new"></div>
+          <div class="file-name-new">stairs.png</div>
+        </a>
+
+        <!-- her -->
+        <a class="file-box" onclick="loadFileView('fv1her.html', 'file-view-her-screen')">
+          <div class="file-icon-new video-icon-new"></div>
+          <div class="file-name-new">her.mp4</div>
+        </a>
+
+        <!-- room -->
+        <a class="file-box" onclick="loadFileView('fv1room.html', 'file-view-room-screen')">
+          <div class="file-icon-new image-icon-new"></div>
+          <div class="file-name-new folder-hover-name">room.jpg</div>
+        </a>
+
+        <!-- doyouseeit -->
+        <a class="file-box" onclick="loadFileView('fv1doyouseeit.html', 'file-view-doyouseeit-screen')">
+          <div class="file-icon-new image-icon-new"></div>
+          <div class="file-name-new">doyouseeit.jpg</div>
+        </a>
+
+        <!-- folder -->
+        <a id="folder-tab-trigger" class="file-box hidden" onclick="openScreen('folder-two-screen')">
+          <div class="file-icon-new folder-icon-new"></div>
+          <div class="file-name-new">evidence?</div>
+        </a>
+                       
+  
+      </div>
+    </div>
+  </div>  
+
+<div id="dynamic-views-container"></div>
+
+<!-- Folder Contents -->
+
+<div id="folder-two-screen" class="screen">
+  <div class="msdos-banner">Starting MS-DOS<span id="dots-folder-two">...</span></div>
+  <button class="exit-directory-button glitch-hover" onclick="openScreen('select-files-screen')">← Exit Directory</button>
+  <div class="wrapper">
+    <div class="file-grid smaller-grid">
+      <a class="file-box" onclick="loadFileView('fv2whycantanyoneseeit.html', 'file-view-whycantanyoneseeit-screen')">
+        <div class="file-icon-new image-icon-new"></div>
+        <div class="file-name-new">whycantanyoneseeit.png</div>
+      </a>
+
+      <a class="file-box twitching" onclick="markFileViewed('basement2'); loadFileView('fv2lookingup.html', 'file-view-basement2-screen')">
+        <div class="file-icon-new image-icon-new"></div>
+        <div class="file-name-new">basement2.jpg</div>
+      </a>
+
+      <a class="file-box" onclick="loadFileView('fv2vlog4.html', 'file-view-vlog4-screen')">
+        <div class="file-icon-new video-icon-new"></div>
+        <div class="file-name-new">vlog-4.mp4</div>
+      </a>
+
+      <a class="file-box" onclick="loadFileView('fv2vlog5.html', 'file-view-vlog5-screen')">
+        <div class="file-icon-new video-icon-new"></div>
+        <div class="file-name-new">vlog-5.mp4</div>
+      </a>
+
+      <a class="file-box glitch-font-file" onclick="markFileViewed('it'); loadFileView('fv2glitchclip3.html', 'file-view-glitch-clip3-screen')">
+        <div class="file-icon-new video-icon-new"></div>
+        <div class="file-name-new glitch-font">it.mp4</div>
+      </a>
+
+      <a class="file-box" onclick="markFileViewed('vlog4'); loadFileView('fv2vlog6.html', 'file-view-vlog6-screen')">
+        <div class="file-icon-new video-icon-new"></div>
+        <div class="file-name-new">vlog-6.mp4</div>
+      </a>
+
+      <a class="file-box" onclick="markFileViewed('see'); loadFileView('fv2whatdoyousee.html', 'file-view-whatdoyousee-screen')">
+        <div class="file-icon-new video-icon-new"></div>
+        <div class="file-name-new">whatdoyousee.mp4</div>
+      </a>
+
+      <a class="file-box glitch-hover-file" onclick="markFileViewed('symbols'); loadFileView('fv2strangesymbols.html', 'file-view-strangesymbols-screen')">
+        <div class="file-icon-new image-icon-new"></div>
+        <div class="file-name-new">strange-symbols.png</div>
+      </a>
+
+      <a class="file-box" onclick="loadFileView('fv2dontlookup.html', 'file-view-dontlookup-screen')">
+        <div class="file-icon-new image-icon-new"></div>
+        <div class="file-name-new">dontlookup.png</div>
+      </a>
+
+      <a class="file-box" onclick="markFileViewed('hi'); loadFileView('fv2hi.html', 'file-view-hi-screen')">
+        <div class="file-icon-new video-icon-new hi-watch-icon"></div>
+        <div class="file-name-new">hi.mp4</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div id="repent-glitch-transition-screen" class="screen">
+  <div id="glitch-grid"></div>
+</div>
+
+
+
+
+
+<!-- Corrupted Select Files Screen -->
+<div id="corrupted-select-files-screen" class="screen">
+  <div class="corrupted-msdos-banner">
+    Starting MS-DOS<span id="dots-select">...</span>
+  </div>
+
+  <div class="wrapper">
+    <div class="file-grid">
+
+      <!-- vlog-1 -->
+      <a class="file-box-red" onclick="loadFileView('fv1vlog1.html', 'file-view-vlog1-screen')">
+        <div class="file-icon-new file-icon-red-video"></div>
+        <div class="file-name-red">vlog-1.mp4</div>
+      </a>
+
+      <!-- image.png (example one) -->
+      <a class="file-box-red" onclick="loadFileView('image-example-one.html', 'file-view-image-example-screen')">
+        <div class="file-icon-new file-icon-red-image"></div>
+        <div class="file-name-red">image.png</div>
+      </a>
+
+      <!-- basement.jpg -->
+      <a class="file-box-red" onclick="loadFileView('fv1lookingdown.html', 'file-view-basement-screen')">
+        <div class="file-icon-new file-icon-red-image"></div>
+        <div class="file-name-red">basement.jpg</div>
+      </a>
+
+      <!-- glitch clip -->
+      <a class="file-box-red" onclick="loadFileView('fv1glitchclip1.html', 'file-view-glitch-clip1-screen')">
+        <div class="file-icon-new file-icon-red-video"></div>
+        <div class="file-name-red">ɆⱤⱤØⱤ.mp4</div>
+      </a>
+
+      <!-- diary entry -->
+      <a class="file-box-red" onclick="loadFileView('diary1.html', 'file-view-diary1-screen')">
+        <div class="file-icon-new file-icon-red-text"></div>
+        <div class="file-name-red">diary-1.txt</div>
+      </a>
+
+      <!-- vlog-2 -->
+      <a class="file-box-red" onclick="loadFileView('fv1vlog2.html', 'file-view-vlog2-screen')">
+        <div class="file-icon-new file-icon-red-video"></div>
+        <div class="file-name-red">vlog-2.mp4</div>
+      </a>
+
+      <!-- second image -->
+      <a class="file-box-red" onclick="loadFileView('image-example-two.html', 'file-view-image-example-two-screen')">
+        <div class="file-icon-new file-icon-red-image"></div>
+        <div class="file-name-red">image.png</div>
+      </a>
+
+      <a class="file-box-red" onclick="openScreen('corrupted-folder-two-screen')">
+        <div class="file-icon-new folder-icon-red"></div>
+        <div class="file-name-red">evidence?</div>
+      </a>
+                     
+
+    </div>
+  </div>
+  <div class="alert-popup" onclick="loadFileView('pop-up.html', 'pop-up-screen')">
+    A̴̳ͫ͞LE̹̤̐RT͉ͅ
+  </div>
+</div> 
+
+
+
+<!-- Corrupted Folder Contents -->
+
+<div id="corrupted-folder-two-screen" class="screen">
+  <div class="corrupted-msdos-banner">Starting MS-DOS<span id="dots-folder-two">...</span></div>
+  <button class="exit-directory-button-red glitch-hover" onclick="openScreen('corrupted-select-files-screen')">← Exit Directory</button>
+  <div class="wrapper">
+    <div class="file-grid smaller-grid corrupted-grid">
+      <a class="file-box-red" onclick="loadFileView('fv2imageexamplethree.html', 'file-view-image-example-three-screen')">
+        <div class="file-icon-new file-icon-red-image"></div>
+        <div class="file-name-red">image.png</div>
+      </a>
+
+      <a class="file-box-red twitching" onclick="loadFileView('fv2lookingup.html', 'file-view-basement2-screen')">
+        <div class="file-icon-new file-icon-red-image"></div>
+        <div class="file-name-red">basement2.jpg</div>
+      </a>
+
+      <a class="file-box-red" onclick="loadFileView('fv2diary2.html', 'file-view-diary2-screen')">
+        <div class="file-icon-new file-icon-red-text"></div>
+        <div class="file-name-red">diary-2.txt</div>
+      </a>
+
+      <a class="file-box-red" onclick="loadFileView('fv2vlog3.html', 'file-view-vlog3-screen')">
+        <div class="file-icon-new file-icon-red-video"></div>
+        <div class="file-name-red">vlog-3.mp4</div>
+      </a>
+
+      <a class="file-box-red glitch-font-file" onclick="loadFileView('fv2glitchclip3.html', 'file-view-glitch-clip3-screen')">
+        <div class="file-icon-new file-icon-red-video"></div>
+        <div class="file-name-red glitch-font">it.mp4</div>
+      </a>
+
+      <a class="file-box-red" onclick="loadFileView('fv2vlog4.html', 'file-view-vlog4-screen')">
+        <div class="file-icon-new file-icon-red-video"></div>
+        <div class="file-name-red">vlog-4.mp4</div>
+      </a>
+
+      <a class="file-box-red" onclick="loadFileView('fv2whatdoyousee.html', 'file-view-whatdoyousee-screen')">
+        <div class="file-icon-new file-icon-red-video"></div>
+        <div class="file-name-red">whatdoyousee.mp4</div>
+      </a>
+
+      <a class="file-box-red glitch-hover-file" onclick="loadFileView('fv2strangesymbols.html', 'file-view-strangesymbols-screen')">
+        <div class="file-icon-new file-icon-red-image"></div>
+        <div class="file-name-red">strange-symbols.png</div>
+      </a>
+
+      <a class="file-box-red" onclick="loadFileView('fv2imageexamplefour.html', 'file-view-image-example-four-screen')">
+        <div class="file-icon-new file-icon-red-image"></div>
+        <div class="file-name-red">image.png</div>
+      </a>
+
+      <a class="file-box-red" onclick="loadFileView('fv2hi.html', 'file-view-hi-screen')">
+        <div class="file-icon-new file-icon-red-video hi-watch-icon"></div>
+        <div class="file-name-red">hi.mp4</div>
+      </a>  
+    </div> 
+  </div> 
+</div>
+
+
+<script src="static/js/main.js"></script>
+
+</body>
+</html>

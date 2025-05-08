@@ -1,0 +1,1061 @@
+/* === Global Styles === */
+body {
+  background-color: #000;
+  color: #33FF33;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.screen {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+} 
+
+.active {
+  display: flex;
+}
+
+/* === Power Button Screen === */
+.power-button {
+  width: 120px;
+  height: 120px;
+  border: 4px solid #00ff00;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s;
+  color: #00ff00;
+}
+
+.power-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #00ff00;
+  animation: glitch 0.4s infinite alternate;
+}
+
+@keyframes glitch {
+  0% { transform: scale(1.1) translate(1px, -1px); }
+  100% { transform: scale(1.1) translate(-1px, 1px); }
+}
+
+/* === Boot Typing Screen === */
+.container {
+  text-align: left;
+  max-width: 80%;
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-wrap;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 1.2em;
+  background-color: #00ff00;
+  margin-left: 2px;
+  animation: blink 1s steps(2, start) infinite;
+  visibility: hidden;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* === MSDOS Banner (Top Left) === */
+.msdos-banner {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: #00FF00;
+  text-shadow: 0 0 5px #00FF00;
+  z-index: 9999;
+}
+
+.corrupted-msdos-banner {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: #FF3333;
+  text-shadow: 0 0 5px #FF3333;
+  z-index: 9999;
+}
+
+/* === Restore Choice Screen & Restore Containers === */
+.restore-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.restore-container p {
+  font-size: 1.2rem;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 20px;
+}
+
+.choice {
+  font-family: 'Courier New', Courier, monospace;
+  background: none;
+  border: 2px solid #00FF00;
+  color: #00FF00;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.choice:hover {
+  transform: scale(1.05);
+}
+
+/* Special hover glitch for "Restore All Files" button */
+.glitch-hover:hover {
+  animation: glitchTextFast 0.3s steps(2) infinite;
+  color: #FF3333;
+}
+
+/* Special hover pulse for "Manual Select" button */
+.emphasize:hover {
+  animation: pulse 1s infinite alternate;
+  color: #00FF00;
+}
+
+@keyframes glitchTextFast {
+  0% { opacity: 1; transform: translateX(0); }
+  20% { opacity: 0.6; transform: translateX(-1px); }
+  40% { opacity: 0.3; transform: translateX(1px); }
+  60% { opacity: 0.8; transform: translateX(-1px); }
+  80% { opacity: 0.5; transform: translateX(1px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+/* === File Grid (Select Files Screen) === */
+.file-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1000px;
+  margin-top: 40px;
+}
+
+.file-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 140px;
+  height: 180px;
+  padding: 10px;
+  cursor: pointer;
+  background: transparent;
+  transition: transform 0.2s ease;
+}
+
+.file-box:hover {
+  transform: scale(1.1);
+}
+
+.file-icon-new {
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: transparent;
+  margin-bottom: 10px;
+}
+
+.video-icon-new {
+  background-image: url('static/media/file-icon-green-mp4.png');
+}
+
+.image-icon-new {
+  background-image: url('static/media/file-icon-green-png.png');
+}
+
+.text-icon-new {
+  background-image: url('static/media/file-icon-green-txt.png');
+}
+
+.folder-icon-new {
+  background-image: url('static/media/folder-icon-green.png');
+}
+
+.folder-hover-name {
+  transition: color 0.3s ease;
+}
+
+.folder-hover-name::after {
+  content: '';
+  transition: content 0.4s ease;
+}
+
+.file-box:hover .folder-hover-name {
+  content: 'UNKNOWN';
+  text-shadow: 0 0 5px #00ff00;
+  color: #00ff00;
+}
+
+.glitch-reveal {
+  animation: glitchFlash 0.6s ease-out;
+}
+
+@keyframes glitchFlash {
+  0% { transform: scale(1.05) skewX(5deg); opacity: 0; }
+  40% { transform: scale(1) skewX(-2deg); opacity: 1; }
+  60% { transform: scale(1.02) skewY(2deg); }
+  100% { transform: scale(1) skew(0deg); }
+}
+
+.file-info {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+  z-index: 2;
+  max-width: 90%;
+  word-break: break-word;
+  white-space: normal;
+}
+
+
+.file-name-new {
+  font-size: 16px;
+  color: #33FF33;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-align: center;
+}
+
+.file-box:hover .file-name-new {
+  color: #00FF00;
+  text-decoration: underline;
+}
+
+/* Return Button on File View Pages */
+.return-button {
+  margin-top: 20px;
+  background: transparent;
+  color: #33FF33;
+  border: 1px solid #33FF33;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.return-button:hover {
+  background: #33FF33;
+  color: #000;
+  font-weight: bolder;
+  animation: flicker 2s infinite;
+
+}
+
+/* === Soft Subtle Glitch (Green Vibe) === */
+.soft-glitch {
+  animation: soft-glitch-pulse 1.5s infinite alternate;
+}
+
+@keyframes soft-glitch-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.error-glitch {
+  font-size: 2rem; /* MUCH BIGGER when ERROR appears */
+  color: #33FF33; /* Keep green */
+}
+
+.broken-choice {
+  opacity: 0.4;
+  font-size: 0.9rem;
+  cursor: not-allowed;
+  pointer-events: none;
+  border: 2px dashed #555;
+  color: #555;
+}
+
+.emphasize-glitch {
+  font-size: 1.5rem;
+  color: #00FF00;
+  border: 2px solid #00FF00;
+  animation: subtleTwitch 6s infinite;
+  transition: transform 0.2s ease;
+}
+
+.emphasize-glitch:hover {
+  animation: violentGlitch 0.3s steps(2) infinite;
+  /* No color, no filter change */
+}
+
+/* Subtle idle twitching */
+@keyframes subtleTwitch {
+  0%, 97%, 100% { transform: translate(0, 0); }
+  98% { transform: translate(-2px, 2px); }
+  99% { transform: translate(2px, -2px); }
+}
+
+/* Violent glitch shake when hovered */
+@keyframes violentGlitch {
+  0% { transform: translate(0, 0) skew(0deg); }
+  25% { transform: translate(-3px, 2px) skew(1deg); }
+  50% { transform: translate(3px, -2px) skew(-1deg); }
+  75% { transform: translate(-2px, 3px) skew(2deg); }
+  100% { transform: translate(2px, -3px) skew(-2deg); }
+}
+
+#restore-message {
+  transition: transform 0.3s ease;
+}
+
+/* Twitch effect */
+.twitch-once {
+  animation: singleTwitch 0.3s 1;
+}
+
+@keyframes singleTwitch {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 2px); }
+  50% { transform: translate(2px, -2px); }
+  75% { transform: translate(-1px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.loading-text {
+  font-size: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #33FF33;
+  width: 0;
+  animation: typingEffect 3s steps(30, end) forwards, blinkCursor 0.7s step-end infinite;
+  font-family: 'Courier New', Courier, monospace;
+  color: #33FF33;
+}
+
+@keyframes typingEffect {
+  from { width: 0 }
+  to { width: 22ch }
+}
+
+@keyframes blinkCursor {
+  50% { border-color: transparent; }
+}
+
+.glitch-flicker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  pointer-events: none;
+  animation: glitchScreen 5s infinite;
+}
+
+@keyframes glitchScreen {
+  0%, 100% { opacity: 0; }
+  5% { opacity: 0.1; }
+  6% { opacity: 0; }
+  12% { opacity: 0.08; }
+  13% { opacity: 0; }
+  50% { opacity: 0.05; }
+  51% { opacity: 0; }
+}
+
+.msdos-banner {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+  z-index: 9999;
+  animation: glitchText 5s infinite;
+}
+
+.video-container video {
+  max-height: 65vh;
+  width: auto;
+  display: block;
+  margin: 20px auto;
+  max-width: 600px;
+  height: auto;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.image-container {
+  max-width: 90%;
+  max-height: 75vh;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+.image-container img {
+  max-height: 65vh;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.5s ease;
+}
+.image-container img:hover {
+  transform: scale(1.02);
+}
+
+.flicker {
+  animation: flicker 2s infinite;
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.7; }
+}
+
+.dot-animation::after {
+  content: '';
+  animation: dots 1.2s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0%   { content: ''; }
+  25%  { content: '.'; }
+  50%  { content: '..'; }
+  75%  { content: '...'; }
+  100% { content: ''; }
+}
+
+.file-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 0;
+  margin: 0;
+}
+
+.diary-container {
+  max-width: 80%;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #33FF33;
+  text-align: left;
+  white-space: pre-wrap;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.diary-container p {
+  margin: 0;
+  margin-bottom: 12px;
+}
+
+.delayed-fade {
+  opacity: 0;
+  animation: fadeIn 1.2s ease-in-out forwards, twitch-once 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes twitch-once {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(1px, -1px); }
+  60% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
+.smaller-grid {
+  gap: 20px;
+  max-width: 900px;
+}
+
+.smaller-grid .file-box {
+  width: 120px;
+  height: 160px;
+}
+
+.smaller-grid .file-icon-new {
+  width: 80px;
+  height: 80px;
+}
+
+.smaller-grid .file-name-new {
+  font-size: 14px;
+}
+
+.smaller-grid .file-box-red {
+  width: 120px;
+  height: 160px;
+}
+.smaller-grid .file-name-red {
+  font-size: 14px;
+}
+
+.hidden {
+  display: none !important;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.exit-directory-button {
+  position: absolute;
+  top: 70px; /* Lowered for breathing room under MS-DOS */
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Courier New', Courier, monospace;
+  background: transparent;
+  color: #33FF33;
+  border: 1px solid #33FF33;
+  padding: 6px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 9999;
+  transition: background 0.2s, color 0.2s;
+}
+
+.exit-directory-button:hover {
+  background: #33FF33;
+  color: #000;
+  font-weight: bold;
+}
+
+.exit-directory-button-red {
+  position: absolute;
+  top: 70px; /* Lowered for breathing room under MS-DOS */
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Courier New', Courier, monospace;
+  background: transparent;
+  color: #FF3333;
+  border: 1px solid #FF3333;
+  padding: 6px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 9999;
+  transition: background 0.2s, color 0.2s;
+}
+
+.exit-directory-button-red:hover {
+  background: #FF3333;
+  color: #000;
+  font-weight: bold;
+}
+
+
+.twitching {
+  animation: subtleTwitch 1.8s infinite;
+}
+
+.glitch-hover-file:hover {
+  animation: violentGlitch 0.25s steps(2) infinite;
+  color: #FF3333;
+}
+
+@keyframes subtleTwitch {
+  0%, 97%, 100% { transform: translate(0, 0); }
+  98% { transform: translate(-2px, 2px); }
+  99% { transform: translate(2px, -2px); }
+}
+
+@keyframes violentGlitch {
+  0% { transform: translate(0, 0) skew(0deg); }
+  25% { transform: translate(-3px, 2px) skew(1deg); }
+  50% { transform: translate(3px, -2px) skew(-1deg); }
+  75% { transform: translate(-2px, 3px) skew(2deg); }
+  100% { transform: translate(2px, -3px) skew(-2deg); }
+}
+
+.glitch-font {
+  transition: font-family 0.2s ease;
+}
+
+.glitch-font-file:hover .glitch-font {
+  animation: fontGlitch 0.6s steps(2) infinite;
+}
+
+@keyframes fontGlitch {
+  0%   { font-family: 'Courier New', monospace; }
+  20%  { font-family: 'Arial', sans-serif; }
+  40%  { font-family: 'Courier New', monospace; }
+  60%  { font-family: 'Lucida Console', monospace; }
+  80%  { font-family: 'Arial Black', sans-serif; }
+  100% { font-family: 'Courier New', monospace; }
+}
+
+.hi-watch-icon {
+  transition: transform 0.4s ease;
+}
+
+.file-box:hover .hi-watch-icon {
+  transform: rotate(2deg) scale(1.05);
+}
+
+.container-reboot {
+  text-align: center;
+  color: #00ff00;
+  animation: textFade 5s forwards;
+}
+
+.status-text {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.bar-container {
+  width: 80vw;
+  height: 25px;
+  border: 2px solid #00ff00;
+  margin: 0 auto;
+  position: relative;
+  animation: borderFade 5s forwards;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0%;
+  background-color: #00ff00;
+  animation: fill 5s linear forwards, fillFade 5s forwards;
+}
+
+@keyframes fill {
+  to { width: 100%; }
+}
+
+@keyframes fillFade {
+  0% { background-color: #00ff00; }
+  100% { background-color: #ff0000; }
+}
+
+@keyframes borderFade {
+  0% { border-color: #00ff00; }
+  100% { border-color: #ff0000; }
+}
+
+@keyframes textFade {
+  0% { color: #00ff00; }
+  100% { color: #ff0000; }
+}
+
+.prompt-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.file-name {
+  font-size: 1.5em;
+  color: #33FF33;
+  margin-bottom: 10px;
+}
+
+.prompt-text {
+  margin-bottom: 20px;
+  font-size: 1em;
+  color: #33FF33;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+}
+
+.glitch-button {
+  padding: 5px 10px;
+  font-size: 1em;
+  cursor: pointer;
+  background: #111;
+  color: white;
+  border: 2px solid white;
+  transition: 0.2s;
+}
+
+#no-button:hover {
+  animation: text-glitch 0.2s steps(2, end) infinite;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.file-icon-red-image {
+  background-image: url('static/media/file-icon-red-png.png');
+}
+
+.file-icon-red-video {
+  background-image: url('static/media/file-icon-red-mp4.png');
+}
+
+.file-icon-red-text {
+  background-image: url('static/media/file-icon-red-txt.png');
+}
+
+.folder-icon-red {
+  background-image: url('static/media/folder-icon-red.png');
+}
+
+.file-name-red {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  color: #FF3333;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-decoration: none;
+}
+
+.file-box-red {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 180px;
+  height: 220px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none; /* ⬅ Turn off all underlines normally */
+  color: #FF3333;
+  background: transparent;
+  border: none;
+  transition: transform 0.2s ease;
+    }
+
+    .file-box-red:hover {
+      transform: scale(1.1);
+      color: #FF3333;
+      text-decoration: underline; /* ⬅ ONLY underline on hover */
+    }
+
+.corrupted-grid {
+  gap: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+.corrupted-grid .file-box-red {
+  margin: 0;
+}
+
+.alert-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #300;
+  color: #FF3333;
+  padding: 10px 15px;
+  border: 1px solid #FF3333;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+  z-index: 9999;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 5px #FF3333; }
+  50% { box-shadow: 0 0 20px #FF3333; }
+  100% { box-shadow: 0 0 5px #FF3333; }
+}
+
+.popup-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 2px solid #ff4444;
+  box-shadow: 0 0 20px #ff0000;
+  padding: 40px 30px;
+  text-align: center;
+  width: 80%;
+  max-width: 500px;
+}
+
+.popup-warning {
+  color: #FF3333;
+  font-weight: normal;
+  margin-top: 10px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.loading-bar {
+  width: 80vw;
+  height: 25px;
+  border: 2px solid #aa2222;
+  margin: 0 auto;
+  position: relative;
+  animation: borderFade 5s forwards;
+  overflow: hidden;
+}
+
+#loading-glitch-screen .loading-bar {
+  animation: none !important;
+  border-color: #AA2222 !important;
+}
+
+.loading-fill {
+  background-color: #aa2222;
+  height: 100%;
+  width: 0%;
+  animation: glitchLoad 6s forwards;
+}
+@keyframes glitchLoad {
+  0% { width: 0%; }
+  15% { width: 20%; }
+  30% { width: 18%; }
+  45% { width: 40%; }
+  60% { width: 38%; }
+  75% { width: 65%; }
+  90% { width: 63%; }
+  100% { width: 65%; }
+}
+
+.choice-red {
+  font-family: 'Courier New', Courier, monospace;
+  background: none;
+  border: 2px solid #FF3333;
+  color: #FF3333;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.choice-red:hover {
+  transform: scale(1.05);
+  color: #FF0000;
+  border-color: #FF0000;
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+#new-file-found-screen {
+  background-color: black;
+  color: #AA2222;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+#new-file-found-screen h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #AA2222;
+}
+
+#new-file-found-screen p {
+  font-size: 1rem;
+  color: #AA2222;
+  margin-bottom: 40px;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+#new-file-found-screen .buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#new-file-found-screen button {
+  background-color: black;
+  border: 2px solid #AA2222;
+  color: #AA2222;
+  padding: 10px 22px;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  transition: transform 0.2s ease, background-color 0.2s, color 0.2s;
+}
+
+#new-file-found-screen button:hover {
+  background-color: #AA2222;
+  color: black;
+  transform: scale(1.05);
+}
+
+#diary-entity-screen {
+  background-color: black;
+  color: #aa2222;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  padding: 20px;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#diary {
+  white-space: pre-wrap;
+  word-break: break-word;
+  transition: opacity 3s ease;
+  margin-top: 40px;
+  padding: 20px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  background-color: #aa2222;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+#blackout-screen {
+  background-color: black;
+  color: #FF4444;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.blackout-message {
+  opacity: 0;
+  animation: blackoutFadeIn 5s forwards, blackoutFadeOut 3s 5s forwards;
+}
+
+@keyframes blackoutFadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes blackoutFadeOut {
+  to { opacity: 0; }
+}
+
+#crash-screen {
+  background-color: black;
+  position: relative;
+  font-family: 'Courier New', monospace;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.error-popup {
+  position: absolute;
+  background-color: #111;
+  color: red;
+  border: 1px solid red;
+  padding: 10px;
+  width: 220px;
+  box-shadow: 0 0 5px red;
+  font-size: 0.9rem;
+  z-index: 9999;
+}
+
+.restart-message {
+  color: #00FF00;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  display: none;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.flicker {
+  background-color: black !important;
+}
