@@ -200,7 +200,7 @@
   <audio id="glitch-audio" src="static/audios/repent-transition.mp3" preload="auto"></audio>
   <audio id="no-click-sound" src="static/audios/no-button-click.mp3" preload="auto"></audio>
   <audio id="" src="static/audios/keyboard-typing.wav" preload="auto"></audio>
-  <audio id="" src="static/audios/website-crash.wav" preload="auto"></audio>
+  <audio id="crash-sound" src="static/audios/website-crash.wav" preload="auto"></audio>
   
   <!-- START: Power Button Screen -->
   <div id="power-button-screen" class="screen active">
@@ -494,54 +494,45 @@
   <button class="exit-directory-button-red glitch-hover" onclick="openScreen('corrupted-select-files-screen')">← Exit Directory</button>
   <div class="wrapper">
     <div class="file-grid smaller-grid corrupted-grid">
-      <a class="file-box-red" onclick="loadFileView('fv2imageexamplethree.html', 'file-view-image-example-three-screen')">
+
+      <a class="file-box-red" onclick="loadFileView('fv3wecanseeit.html', 'file-view-wecanseeit-screen')">
+        <div class="file-icon-new file-icon-red-video"></div>
+        <div class="file-name-red">whycantanyoneseeit.mp4</div>
+      </a>
+
+      <a class="file-box-red twitching" onclick="loadFileView('fv3smile.html', 'file-view-smile-screen')">
         <div class="file-icon-new file-icon-red-image"></div>
-        <div class="file-name-red">image.png</div>
+        <div class="file-name-red">smile.jpg</div>
       </a>
 
-      <a class="file-box-red twitching" onclick="loadFileView('fv2lookingup.html', 'file-view-basement2-screen')">
+      <a class="file-box-red glitch-font-file" onclick="loadFileView('fv3here.html', 'file-view-here-screen')">
         <div class="file-icon-new file-icon-red-image"></div>
-        <div class="file-name-red">basement2.jpg</div>
+        <div class="file-name-red glitch-font">here.mp4</div>
       </a>
 
-      <a class="file-box-red" onclick="loadFileView('fv2diary2.html', 'file-view-diary2-screen')">
-        <div class="file-icon-new file-icon-red-text"></div>
-        <div class="file-name-red">diary-2.txt</div>
-      </a>
-
-      <a class="file-box-red" onclick="loadFileView('fv2vlog3.html', 'file-view-vlog3-screen')">
+      <a class="file-box-red" onclick="loadFileView('fv3noone.html', 'file-view-noone-screen')">
         <div class="file-icon-new file-icon-red-video"></div>
-        <div class="file-name-red">vlog-3.mp4</div>
+        <div class="file-name-red">noone.mp4</div>
       </a>
 
-      <a class="file-box-red glitch-font-file" onclick="loadFileView('fv2glitchclip3.html', 'file-view-glitch-clip3-screen')">
+      <a class="file-box-red" onclick="loadFileView('fv3lookagain.html', 'file-view-lookagain-screen')">
         <div class="file-icon-new file-icon-red-video"></div>
-        <div class="file-name-red glitch-font">it.mp4</div>
+        <div class="file-name-red">lookagain.mp4</div>
       </a>
 
-      <a class="file-box-red" onclick="loadFileView('fv2vlog4.html', 'file-view-vlog4-screen')">
-        <div class="file-icon-new file-icon-red-video"></div>
-        <div class="file-name-red">vlog-4.mp4</div>
-      </a>
-
-      <a class="file-box-red" onclick="loadFileView('fv2whatdoyousee.html', 'file-view-whatdoyousee-screen')">
-        <div class="file-icon-new file-icon-red-video"></div>
-        <div class="file-name-red">whatdoyousee.mp4</div>
-      </a>
-
-      <a class="file-box-red glitch-hover-file" onclick="loadFileView('fv2strangesymbols.html', 'file-view-strangesymbols-screen')">
+      <a class="file-box-red glitch-hover-file" onclick="loadFileView('fv3blank.html', 'file-view-blank-screen')">
         <div class="file-icon-new file-icon-red-image"></div>
         <div class="file-name-red">strange-symbols.png</div>
       </a>
 
-      <a class="file-box-red" onclick="loadFileView('fv2imageexamplefour.html', 'file-view-image-example-four-screen')">
+      <a class="file-box-red" onclick="loadFileView('fv3isaiddont.html', 'file-view-isaiddont-screen')">
         <div class="file-icon-new file-icon-red-image"></div>
-        <div class="file-name-red">image.png</div>
+        <div class="file-name-red">isaiddont.png</div>
       </a>
 
-      <a class="file-box-red" onclick="loadFileView('fv2hi.html', 'file-view-hi-screen')">
+      <a class="file-box-red" onclick="loadFileView('fv3bye.html', 'file-view-bye-screen')">
         <div class="file-icon-new file-icon-red-video hi-watch-icon"></div>
-        <div class="file-name-red">hi.mp4</div>
+        <div class="file-name-red">bye.mp4</div>
       </a>  
     </div> 
   </div> 

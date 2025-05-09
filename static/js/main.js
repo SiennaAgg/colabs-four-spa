@@ -212,6 +212,47 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// Red file hover and click sounds
+document.querySelectorAll('.file-box-red').forEach(file => {
+  file.addEventListener('mouseenter', () => {
+    hoverSound.pause();
+    hoverSound.currentTime = 0;
+    hoverSound.play();
+  });
+
+  file.addEventListener('click', (e) => {
+    e.preventDefault();
+    clickSound.pause();
+    clickSound.currentTime = 0;
+    clickSound.play();
+
+    const targetScreen = file.getAttribute('data-target');
+    if (targetScreen) {
+      openScreen(targetScreen);
+    }
+  });
+});
+
+// Red return and choice buttons + popup-related buttons
+document.querySelectorAll(
+  '.red-return, .choice-red, .exit-directory-button-red, .alert-popup, #open-file, #continue-restoration, #proceed-restoration, #return-files'
+).forEach(button => {
+  button.addEventListener('mouseenter', () => {
+    hoverSound.pause();
+    hoverSound.currentTime = 0;
+    hoverSound.play();
+  });
+
+  button.addEventListener('click', () => {
+    clickSound.pause();
+    clickSound.currentTime = 0;
+    clickSound.play();
+  });
+});
+
+
+
+
 // Boot screen glitch when clicked
 function startGlitchEffect(el, originalText) {
   const nonsense = ["01923JKA!!", ">>>ERROR<<<", "#$%!*@!", "xVf01a", "____", "###", "NUL", "001010101", "9a3dL@", "~~~~"];
@@ -248,6 +289,23 @@ function loadFileView(fileName, screenIdToShow) {
         const newScreen = document.getElementById(screenIdToShow);
         if (newScreen) {
           newScreen.classList.add('active');
+          // Attach hover and click sounds to new buttons inside this screen
+newScreen.querySelectorAll(
+  '.file-box-red, .red-return, .choice-red, .exit-directory-button-red, .alert-popup, #open-file, #continue-restoration, #proceed-restoration, #return-files'
+).forEach(btn => {
+  btn.addEventListener('mouseenter', () => {
+    hoverSound.pause();
+    hoverSound.currentTime = 0;
+    hoverSound.play();
+  });
+
+  btn.addEventListener('click', () => {
+    clickSound.pause();
+    clickSound.currentTime = 0;
+    clickSound.play();
+  });
+});
+
         } else {
           console.error(`Could not find screen: ${screenIdToShow}`);
         }
@@ -280,6 +338,13 @@ if (screenIdToShow === 'required-view-screen') {
   }, 9000); // matches animation length (5s fade in + 3s fade out + buffer)
 
 } else if (screenIdToShow === 'crash-screen') {
+  // Play crash sound
+const crashSound = document.getElementById('crash-sound');
+if (crashSound) {
+  crashSound.currentTime = 0;
+  crashSound.play().catch(() => {});
+}
+
   const errors = [
     "Memory access violation.",
     "Unknown system anomaly detected.",
